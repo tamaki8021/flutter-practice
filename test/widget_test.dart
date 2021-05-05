@@ -12,11 +12,12 @@ import 'package:flutter_practice_app/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+    // 画面を構築する
     await tester.pumpWidget(MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
+    // 1が書かれているWidgetがないことをテストする
     expect(find.text('1'), findsNothing);
 
     // Tap the '+' icon and trigger a frame.
