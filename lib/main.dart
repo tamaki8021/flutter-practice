@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice_app/test_page1.dart';
 
 void main() {
   runApp(MyApp());
@@ -72,6 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 '$_type',
                 style: TextStyle(fontSize: 20, color: Colors.red),
               ),
+            TextButton(onPressed: () => {
+              Navigator.push(context, MaterialPageRoute(builder: (_) {
+                return TestPage1();
+              }))
+            }, child: Text("次のページへ"),),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
