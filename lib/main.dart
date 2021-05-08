@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_practice_app/test_page1.dart';
+import 'package:flutter_practice_app/stream_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +36,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   String _type = "偶数";
   bool flag = false;
 
+  var intStream = StreamController<int>();
+  var stringStream = StreamController<String>.broadcast();
+  var generator = new Generator();
+  var coodinator = new Coordinator();
+  var consumer = new Consumer();
+
   void _incrementCounter() {
+    generator.generate();
     setState(() {
       _counter++;
       if (_counter % 2 == 0) {
@@ -48,6 +58,24 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     setState(() {
       flag = !flag;
     });
+  }
+
+  @override
+  void initState() {
+    generator.init(intStream);
+    coodinator.init(intStream, stringStream);
+    consumer.init(stringStream);
+    coodinator.coorinate();
+    consumer.consume();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    intStream.close();
+    stringStream.close();
+    super.dispose();
   }
 
   @override
@@ -143,6 +171,16 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               AnimatedSwitcher(
                   duration: Duration(seconds: 3),
                   child: flag ? Text("none") : Icon(Icons.favorite, color: Colors.pink)
+              ),
+              StreamBuilder<String>(
+                  stream: stringStream.stream,
+                  initialData: "",
+                  builder: (context, snapshot) {
+                    return Text(
+                      'RANDOM : ${snapshot.data}',
+                      style: Theme.of(context).textTheme.headline4,
+                    );
+                  }
               ),
             ],
           ),
