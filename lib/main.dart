@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice_app/test_page1.dart';
 import 'package:flutter_practice_app/stream_page.dart';
+import 'package:flutter_practice_app/todo_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -113,6 +115,18 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   return TestPage1();
                 }))
               }, child: Text("次のページへ"),),
+              ElevatedButton(
+                  onPressed: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return TodoPage();
+                    }))
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      elevation: 16
+                  ),
+                  child: Text('todo')
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
